@@ -72,3 +72,10 @@ li:hover{
 .certificate{
     font-family: 'Bitter', serif;
 }
+
+@media (max-width:780px) {
+    .quizeBody{
+        width:70% ;
+    }
+
+}
