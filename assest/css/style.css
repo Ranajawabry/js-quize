@@ -1,0 +1,74 @@
+@import url('https://fonts.googleapis.com/css2?family=Bitter&family=Bree+Serif&family=Cookie&family=Dosis&family=Fira+Sans&family=Josefin+Sans:wght@700&family=Martian+Mono:wght@500&family=Montserrat&family=Raleway&family=Roboto&family=Urbanist&display=swap');
+
+
+*{
+    margin: 0;
+    padding: 0;
+   box-sizing: border-box;
+}
+a{
+    text-decoration: none;
+}
+body{
+    font-family: 'Bitter', serif;
+}
+button:hover{
+    background-color: white !important;
+    color: #007bff !important;
+}
+button:hover a{
+
+    color: #007bff !important;
+}
+
+/* quize page css */
+.quizeBody{
+    box-shadow: 1px 3px 6px gray;
+    width: 60%;
+    border: 1px solid rgb(192, 188, 188);
+}
+.bg-main{
+    background-color: #007bff
+}
+.quizeBody button:hover{
+    background-color: #007bff !important;
+    color: white !important;
+}
+.border{
+    border: solid 3px #007bff !important;
+}
+li:hover{
+    cursor: pointer;
+    border-color: black !important;
+}
+.footer{
+    border-top: 1px solid rgb(190, 184, 184);
+    /* position: absolute; */
+    width: 100%;
+    padding-top: 20px;
+    bottom: 0;
+}
+.choosen{
+    background-color:  #007bff55;
+}
+/*  */
+.bg-input{
+    background-color: rgb(223, 217, 217);
+}
+.quizeBody .conr-btn:hover{
+    background-color: white !important;
+    color: #007bff !important;
+    border: 1px solid #007bff ;
+}
+
+ .quizeBody .conr-btn:hover a{
+
+    color: #007bff !important;
+}
+
+
+
+/*  */
+.certificate{
+    font-family: 'Bitter', serif;
+}
