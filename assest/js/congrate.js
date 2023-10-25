@@ -50,7 +50,7 @@ const sharPage= (link)=>{
     let pageTitle = encodeURIComponent(document.title);
     console.log(document.title)
     if (link === 'facebook') {
-        url = "https://www.facebook.com/sharer.php?u=" + pageUrl;
+        url = "https://www.facebook.com/sharer.php?u=" + pageUrl + "&text=" + "I%27m%20excited%20to%20share%20that%20I%20have%20passed%20JavaScript%20Test%20and%20got%20certified%20at%20TestMode"
         
         socialWindow(url, 570, 300);
         
@@ -68,7 +68,7 @@ const sharPage= (link)=>{
             socialWindow(url, 570, 450);
           }
      else if(link === 'telegram') {
-            url = "https://web.telegram.org://send?text=" + pageTitle + "%20" + pageUrl;
+            url = "https://t.me/share/url?url=" + pageTitle + "%20" + pageUrl;
             socialWindow(url, 570, 450);
           }
 
