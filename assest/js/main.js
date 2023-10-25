@@ -28,8 +28,18 @@ const questions=[
 ]
 
 
-
-const showMessage = ()=>{
+const showCheckMsg = ()=>{
+    Swal.fire({
+        title: 'Choose First ',
+        icon: 'info',
+        showCloseButton: true,
+        focusConfirm: false,
+        confirmButtonText:
+          '<i class="fa fa-thumbs-up"></i> Great!',
+        confirmButtonAriaLabel: 'Thumbs up, great!',
+      })
+}
+const showTimeMessage = ()=>{
     Swal.fire({
         title: 'Time Out ',
         icon: 'info',
@@ -53,7 +63,7 @@ const setTimer = ()=>{
        if(timer === 0){
         timeOutFlag = true;
         clearInterval(TimerVal)
-        showMessage()
+        showTimeMessage()
        }
         
     }, 1000);
@@ -94,9 +104,12 @@ const choosnOptionStyle= (option,options)=>{
 
 
 const chechedButton =(flag , option , correctOption)=>{
-    
-    console.log(correctOption)
-    console.log(option)
+    if(!option){
+        showCheckMsg()
+          return   
+    }
+    // console.log(correctOption)
+     console.log(option)
     document.getElementById('check').addEventListener('click',()=>{
         
         if(document.getElementById('check').textContent === 'Check'){
@@ -145,7 +158,7 @@ const checkAns =(i)=>{
             choosnOptionStyle(option,options)
             if (option === correctAns){
                 correctAns=option;
-                console.log('kkk');
+                // console.log('kkk');
                 flag= true;
 
                 chechedButton(flag,option,correctAns)
@@ -219,8 +232,11 @@ const displayQuestion = (i)=>{
    checkAns(i);
 
 }
-
 displayQuestion(i);
+document.getElementById('check').addEventListener('click',()=>{
+    chechedButton();
+})
+
 
 
         
