@@ -190,15 +190,15 @@ const displayQuestion = (i)=>{
                     <div>
                         <div class="row p-2 rounded justify-content-around text-white bg-main">
                             <div class="col-9" >
-                                <h4>Question number ${i+1} out of 10</h4>
-                                <h5 id="score">Score : ${score}</h5>
+                                <h5>Question number ${i+1} out of 10</h5>
+                                <h6 id="score">Score : ${score}</h6>
                             </div>
                             <div class="timer col-2 pt-3">
                                 <span class=" p-3 rounded bg-light text-center text-info" id="timer" >${timer}</span>
                             </div>
                         </div>
                         <div class="my-2">
-                            <h5> ${questions[i].question}</h5>
+                            <h6> ${questions[i].question}</h6>
                             <div class="bg-dark text-white ">
                                 <h5>${questions[i].description}</h5>
                             </div>
@@ -214,11 +214,11 @@ const displayQuestion = (i)=>{
                         </div>
                         <div class="row mt-3">
                             <div class="col-6">
-                                <button class="btn border w-100 text-primary fw-bold fs-5" id="back"><i class="fa fa-angle-left pe-2" aria-hidden="true"></i>Back</button>
+                                <button class="btn border w-100 text-primary fw-bold fs-6" id="back"><i class="fa fa-angle-left pe-2" aria-hidden="true"></i>Back</button>
                             </div>
                             
                             <div class="col-6">
-                                <button class="btn border w-100 text-primary fw-bold fs-5" id="check">Check<i class="fa fa-check-double  ps-2" aria-hidden="true"></i></button>
+                                <button class="btn border w-100 text-primary fw-bold fs-6" id="check">Check<i class="fa fa-check-double  ps-2" aria-hidden="true"></i></button>
                             </div>
                         </div>
                        
@@ -234,7 +234,9 @@ const displayQuestion = (i)=>{
 }
 displayQuestion(i);
 document.getElementById('check').addEventListener('click',()=>{
+    if(document.getElementById('check').textContent === 'Check')
     chechedButton();
+
 })
 
 
