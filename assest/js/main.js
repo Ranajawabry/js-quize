@@ -4,6 +4,8 @@ let flag ;
 let timer = 60;
 let timeOutFlag= false;
 let TimerVal
+let currentQuestion = 0 ;
+
 const questions=[
     {id :1 ,question :'Declare a variable called username.',description:'<pre class="p-2">... username</pre>',option :['var','string','declre','char'],ans:'var'},
     {id :2 ,question :'Assign data of integer data type to the following variable.',description:'<pre class="p-2">firstNumber = ...</pre>',option :[2.14,"'8'",'"20"',80],ans:80},
@@ -69,14 +71,54 @@ const setTimer = ()=>{
     }, 1000);
 }
 
-const backBtn =()=>{
+const mm =()=>{
+    const options = document.getElementsByTagName('li');
+    let correctAns= findAns(i); 
+    for(const option of options){
+        if (option === correctAns){
+            option.style.backgroundColor='#28a745';
+            break
+        } 
+    }
+}
 
-    document.getElementById('back').addEventListener('click',()=>{
-        if( i != 1){
+const backBtn =()=>{
+    console.log('mmmm')
+ 
+    
+        if( i != 0){
             i--;
-            displayQuestion(i)
+            displayQuestion(i);
+            clearInterval(TimerVal);
+            mm();  //set green color on correct ans
+
+           document.getElementById('check').textContent = 'Next';
+       
+        }
+    
+    
+
+    document.getElementById('check').addEventListener('click',()=>{
+             i++;
+             console.log( i , currentQuestion )
+             if(document.getElementById('check').textContent == 'Next'){
+            
+                 if( i <= currentQuestion){
+                   
+                    console.log('mmmm')
+                    displayQuestion(i);
+                    document.getElementById('check').textContent = 'Next';
+                    clearInterval(TimerVal);
+                    mm();
+                 } else{
+                
+                    document.getElementById('check').textContent = 'Check';
+                     displayQuestion(i);
+                    
+                }      
         }
     })
+
 
 }
 const findAns =(i)=>{
@@ -138,11 +180,30 @@ const chechedButton =(flag , option , correctOption)=>{
                 
             }
         }
-        else{
-            i++;
-           timeOutFlag? score += 2 : score += 5 ;
-            document.getElementById('score').innerHTML=`Score : ${score}`;
-            displayQuestion(i)
+        else if(document.getElementById('check').textContent === 'Next'){
+           
+            console.log( i , currentQuestion)
+              i++;
+           
+            if( i <= currentQuestion){    
+                console.log('mmmm')
+                displayQuestion(i);
+                document.getElementById('check').textContent = 'Next';
+                clearInterval(TimerVal);
+                mm();
+             } else{
+                displayQuestion(i)
+                document.getElementById('check').textContent = 'Check';
+                // displayQuestion(i);
+                timeOutFlag? score += 2 : score += 5 ;
+                document.getElementById('score').innerHTML=`Score : ${score}`;
+                
+
+            }
+          
+
+           
+          
         }
      
     })
@@ -160,6 +221,7 @@ const checkAns =(i)=>{
                 correctAns=option;
                 // console.log('kkk');
                 flag= true;
+                currentQuestion=i;
 
                 chechedButton(flag,option,correctAns)
             
@@ -175,6 +237,13 @@ const checkAns =(i)=>{
         })
                
             }
+        }
+ const chechError= ()=>{
+            document.getElementById('check').addEventListener('click',()=>{
+                if(document.getElementById('check').textContent === 'Check')
+                chechedButton();
+            
+            })
         }
 
 const displayQuestion = (i)=>{
@@ -205,20 +274,20 @@ const displayQuestion = (i)=>{
                         </div>
                         <div>
                             <ul class="list-group list-unstyled">
-                                <li class="  mt-3 p-2  rounded border " >${questions[i].option[0]}</li>
-                                <li class=" mt-3 p-2 rounded border " >${questions[i].option[1]}</li>
-                                <li class=" mt-3 p-2  rounded border " >${questions[i].option[2]}</li>
-                                <li class="mt-3 p-2   rounded border" >${questions[i].option[3]}</li>
+                                <li class="  p-1  rounded border " style="font-size:16px;" >${questions[i].option[0]}</li>
+                                <li class=" mt-3 p-1 rounded border "  style="font-size:16px;">${questions[i].option[1]}</li>
+                                <li class=" mt-3 p-1  rounded border "style="font-size:16px;" >${questions[i].option[2]}</li>
+                                <li class="mt-3 p-1   rounded border" style="font-size:16px;" >${questions[i].option[3]}</li>
                               </ul>
                             
                         </div>
                         <div class="row mt-3">
                             <div class="col-6">
-                                <button class="btn border w-100 text-primary fw-bold fs-6" id="back"><i class="fa fa-angle-left pe-2" aria-hidden="true"></i>Back</button>
+                                <button class="btn border w-100 text-primary fw-bold fs-6" id="back" onclick= "backBtn()"><i class="fa fa-angle-left pe-2" aria-hidden="true"  ></i>Back</button>
                             </div>
                             
                             <div class="col-6">
-                                <button class="btn border w-100 text-primary fw-bold fs-6" id="check">Check<i class="fa fa-check-double  ps-2" aria-hidden="true"></i></button>
+                                <button class="btn border w-100 text-primary fw-bold fs-6" id="check" >Check<i class="fa fa-check-double  ps-2" aria-hidden="true"></i></button>
                             </div>
                         </div>
                        
@@ -227,17 +296,14 @@ const displayQuestion = (i)=>{
     
             </div>
     `
-  
-    backBtn();
+    ;
    checkAns(i);
+   chechError();
 
 }
-displayQuestion(i);
-document.getElementById('check').addEventListener('click',()=>{
-    if(document.getElementById('check').textContent === 'Check')
-    chechedButton();
 
-})
+displayQuestion(i);
+
 
 
 

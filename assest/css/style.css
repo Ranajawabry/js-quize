@@ -22,9 +22,12 @@ button:hover a{
 }
 
 /* quize page css */
+.vh-101{
+    height: 101vh;
+}
 .quizeBody{
     box-shadow: 1px 3px 6px gray;
-    width: 60%;
+    width: 55%;
     border: 1px solid rgb(192, 188, 188);
 }
 .bg-main{
@@ -45,8 +48,8 @@ li:hover{
     border-top: 1px solid rgb(190, 184, 184);
     /* position: absolute; */
     width: 100%;
-    padding-top: 20px;
-    bottom: 0;
+    padding-top: 10px;
+    bottom: -20px;
 }
 .choosen{
     background-color:  #007bff55;
