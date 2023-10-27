@@ -10,6 +10,7 @@ let correctAns;
 
 
 
+
 const questions = [
   {
     id: 1,
@@ -150,6 +151,7 @@ const chechedbtn=(btn)=>{
         if(!userChoice){
             showCheckMsg();
         }
+        allowBack = true;
         questions[i].isAnwered = true;
         console.log('cheeeck');
         if(ans_flag){
@@ -172,8 +174,7 @@ const chechedbtn=(btn)=>{
               text: "Wrong Answer!",
             });
           }
-          ans_flag = false;
-          userChoice = null
+         
     }
     else{
         console.log('nexxxt');
@@ -186,6 +187,9 @@ const chechedbtn=(btn)=>{
         clearInterval(TimerVal);
         mm();
       } else {
+        ans_flag = false;
+        userChoice = null
+        
         displayQuestion(i);
         document.getElementById("check").textContent = "Check";
         // displayQuestion(i);
@@ -193,16 +197,18 @@ const chechedbtn=(btn)=>{
         document.getElementById("score").innerHTML = `Score : ${score}`;
       }
     }
+    // ans_flag = false;
+    // userChoice = null
     
 }
 const backBtn = () => {
   console.log("mmmm");
 
   if (i != 0) {
-    // if(!userChoice){
-    //     showCheckMsg();
-    //     return
-    // }
+    if(!userChoice){
+        showCheckMsg();
+        return
+    }
     i--;
     displayQuestion(i);
     clearInterval(TimerVal);
