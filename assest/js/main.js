@@ -1,10 +1,14 @@
 let i = 0;
 let score = 0;
-let flag;
+let ans_flag;
 let timer = 60;
 let timeOutFlag = false;
 let TimerVal;
-let currentQuestion = 0;
+let userChoice;
+let correctAns;
+
+
+
 
 const questions = [
   {
@@ -140,11 +144,65 @@ const mm = () => {
     }
   }
 };
+const chechedbtn=(btn)=>{
 
+    if(btn.textContent === 'Check'){
+        if(!userChoice){
+            showCheckMsg();
+        }
+        questions[i].isAnwered = true;
+        console.log('cheeeck');
+        if(ans_flag){
+            userChoice.style.backgroundColor = "#28a745";
+            Swal.fire({
+              position: "top-end",
+              icon: "success",
+              title: "Correct Answer",
+              showConfirmButton: false,
+              timer: 1500,
+            });
+            document.getElementById("check").textContent = "Next";
+
+        }else {
+            correctAns.style.backgroundColor = "#28a745";
+            userChoice.style.backgroundColor = "#dc3545";
+            document.getElementById("check").textContent = "Next";
+            Swal.fire({
+              icon: "error",
+              text: "Wrong Answer!",
+            });
+          }
+          ans_flag = false;
+          userChoice = null
+    }
+    else{
+        console.log('nexxxt');
+        i++;
+
+      if (questions[i].isAnwered === true) {
+        console.log("mmmm");
+        displayQuestion(i);
+        document.getElementById("check").textContent = "Next";
+        clearInterval(TimerVal);
+        mm();
+      } else {
+        displayQuestion(i);
+        document.getElementById("check").textContent = "Check";
+        // displayQuestion(i);
+        timeOutFlag ? (score += 2) : (score += 5);
+        document.getElementById("score").innerHTML = `Score : ${score}`;
+      }
+    }
+    
+}
 const backBtn = () => {
   console.log("mmmm");
 
   if (i != 0) {
+    // if(!userChoice){
+    //     showCheckMsg();
+    //     return
+    // }
     i--;
     displayQuestion(i);
     clearInterval(TimerVal);
@@ -153,22 +211,6 @@ const backBtn = () => {
     document.getElementById("check").textContent = "Next";
   }
 
-  document.getElementById("check").addEventListener("click", () => {
-    i++;
-    console.log(i, currentQuestion);
-    if (document.getElementById("check").textContent == "Next") {
-      if (i <= currentQuestion) {
-        console.log("mmmm");
-        displayQuestion(i);
-        document.getElementById("check").textContent = "Next";
-        clearInterval(TimerVal);
-        mm();
-      } else {
-        document.getElementById("check").textContent = "Check";
-        displayQuestion(i);
-      }
-    }
-  });
 };
 const findAns = (i) => {
   const options = document.getElementsByTagName("li");
@@ -190,87 +232,24 @@ const choosnOptionStyle = (option, options) => {
   }
 };
 
-const chechedButton = (flag, option, correctOption) => {
-  if (!option) {
-    showCheckMsg();
-    return;
-  }
-  // console.log(correctOption)
-  console.log(option);
-  document.getElementById("check").addEventListener("click", () => {
-    if (document.getElementById("check").textContent === "Check") {
-      if (flag) {
-        option.style.backgroundColor = "#28a745";
-        Swal.fire({
-          position: "top-end",
-          icon: "success",
-          title: "Correct Answer",
-          showConfirmButton: false,
-          timer: 1500,
-        });
-        document.getElementById("check").textContent = "Next";
-      } else {
-        console.log(correctOption);
-        correctOption.style.backgroundColor = "#28a745";
-        option.style.backgroundColor = "#dc3545";
-        document.getElementById("check").textContent = "Next";
-        Swal.fire({
-          // position: 'top-end',
-          icon: "error",
-          text: "Wrong Answer!",
-        });
-      }
-    } else if (document.getElementById("check").textContent === "Next") {
-      console.log(i, currentQuestion);
-      i++;
 
-      if (i <= currentQuestion) {
-        console.log("mmmm");
-        displayQuestion(i);
-        document.getElementById("check").textContent = "Next";
-        clearInterval(TimerVal);
-        mm();
-      } else {
-        displayQuestion(i);
-        document.getElementById("check").textContent = "Check";
-        // displayQuestion(i);
-        timeOutFlag ? (score += 2) : (score += 5);
-        document.getElementById("score").innerHTML = `Score : ${score}`;
-      }
-    }
-  });
-};
-const checkAns = (i) => {
+const checkAns = (i,choice) => {
+    clearInterval(TimerVal); 
+   userChoice =choice
   const options = document.getElementsByTagName("li");
-  let correctAns = findAns(i);
+   correctAns = findAns(i);
+  choosnOptionStyle(choice, options);
+if (choice === correctAns) {
+    correctAns = choice;
+    ans_flag = true;
+    
 
-  for (const option of options) {
-    option.addEventListener("click", () => {
-      clearInterval(TimerVal);
-      choosnOptionStyle(option, options);
-      if (option === correctAns) {
-        correctAns = option;
-        // console.log('kkk');
-        flag = true;
-        currentQuestion = i;
-
-        chechedButton(flag, option, correctAns);
-
-        // displayQuestion(i);
-      } else {
-        flag = false;
-        console.log(correctAns);
-        chechedButton(flag, option, correctAns);
-      }
-    });
+  } else {
+    ans_flag = false;
+   
   }
 };
-const chechError = () => {
-  document.getElementById("check").addEventListener("click", () => {
-    if (document.getElementById("check").textContent === "Check")
-      chechedButton();
-  });
-};
+
 
 const displayQuestion = (i) => {
   if (i == 10) {
@@ -300,16 +279,16 @@ const displayQuestion = (i) => {
                         </div>
                         <div>
                             <ul class="list-group list-unstyled">
-                                <li class="  p-1  rounded border " style="font-size:16px;" >${
+                                <li class="  p-1  rounded border " style="font-size:16px;" onclick ="checkAns(i,this)" >${
                                   questions[i].option[0]
                                 }</li>
-                                <li class=" mt-3 p-1 rounded border "  style="font-size:16px;">${
+                                <li class=" mt-3 p-1 rounded border "  style="font-size:16px;" onclick ="checkAns(i,this)">${
                                   questions[i].option[1]
                                 }</li>
-                                <li class=" mt-3 p-1  rounded border "style="font-size:16px;" >${
+                                <li class=" mt-3 p-1  rounded border "style="font-size:16px;" onclick ="checkAns(i,this)" >${
                                   questions[i].option[2]
                                 }</li>
-                                <li class="mt-3 p-1   rounded border" style="font-size:16px;" >${
+                                <li class="mt-3 p-1   rounded border" style="font-size:16px;" onclick ="checkAns(i,this)" >${
                                   questions[i].option[3]
                                 }</li>
                               </ul>
@@ -321,7 +300,7 @@ const displayQuestion = (i) => {
                             </div>
                             
                             <div class="col-6">
-                                <button class="btn border w-100 text-primary fw-bold fs-6" id="check" >Check<i class="fa fa-check-double  ps-2" aria-hidden="true"></i></button>
+                                <button class="btn border w-100 text-primary fw-bold fs-6" id="check" onclick= "chechedbtn(this)" >Check<i class="fa fa-check-double  ps-2" aria-hidden="true"></i></button>
                             </div>
                         </div>
                        
@@ -330,8 +309,8 @@ const displayQuestion = (i) => {
     
             </div>
     `;
-  checkAns(i);
-  chechError();
+
+
 };
 
 displayQuestion(i);
