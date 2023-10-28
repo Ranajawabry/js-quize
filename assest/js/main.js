@@ -6,7 +6,7 @@ let timeOutFlag = false;
 let TimerVal;
 let userChoice;
 let correctAns;
-
+let userAnswers=[]
 
 
 
@@ -139,19 +139,22 @@ const mm = () => {
   const options = document.getElementsByTagName("li");
   let correctAns = findAns(i);
   for (const option of options) {
+    if(option.innerText === userAnswers[i]){
+        option.style.backgroundColor = "rgb(220, 53, 69)";
+    }
     if (option === correctAns) {
       option.style.backgroundColor = "#28a745";
-      break;
     }
+
+  
   }
-};
+}
 const chechedbtn=(btn)=>{
 
     if(btn.textContent === 'Check'){
         if(!userChoice){
             showCheckMsg();
         }
-        allowBack = true;
         questions[i].isAnwered = true;
         console.log('cheeeck');
         if(ans_flag){
@@ -164,6 +167,7 @@ const chechedbtn=(btn)=>{
               timer: 1500,
             });
             document.getElementById("check").textContent = "Next";
+            timeOutFlag  ? (score += 2) : (score += 5);
 
         }else {
             correctAns.style.backgroundColor = "#28a745";
@@ -176,7 +180,7 @@ const chechedbtn=(btn)=>{
           }
          
     }
-    else{
+    else{   ////// thats mean Next btn
         console.log('nexxxt');
         i++;
 
@@ -193,12 +197,11 @@ const chechedbtn=(btn)=>{
         displayQuestion(i);
         document.getElementById("check").textContent = "Check";
         // displayQuestion(i);
-        timeOutFlag ? (score += 2) : (score += 5);
+       
         document.getElementById("score").innerHTML = `Score : ${score}`;
       }
     }
-    // ans_flag = false;
-    // userChoice = null
+ 
     
 }
 const backBtn = () => {
@@ -241,7 +244,9 @@ const choosnOptionStyle = (option, options) => {
 
 const checkAns = (i,choice) => {
     clearInterval(TimerVal); 
-   userChoice =choice
+   userChoice =choice;
+   userAnswers.push(choice.innerText);
+   console.log(userAnswers)
   const options = document.getElementsByTagName("li");
    correctAns = findAns(i);
   choosnOptionStyle(choice, options);
