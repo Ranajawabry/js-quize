@@ -152,7 +152,7 @@ const mm = () => {
 const chechedbtn=(btn)=>{
 
     if(btn.textContent === 'Check'){
-        if(!userChoice){
+        if(!userAnswers[i]){
             showCheckMsg();
         }
         questions[i].isAnwered = true;
@@ -208,7 +208,7 @@ const backBtn = () => {
   console.log("mmmm");
 
   if (i != 0) {
-    if(!userChoice){
+    if(!userAnswers[i]){
         showCheckMsg();
         return
     }
