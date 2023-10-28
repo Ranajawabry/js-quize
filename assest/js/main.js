@@ -138,6 +138,10 @@ const setTimer = () => {
 const mm = () => {
   const options = document.getElementsByTagName("li");
   let correctAns = findAns(i);
+  if(correctAns.innerText === userAnswers[i]){
+    correctAns.style.backgroundColor = "#28a745";
+    return
+  }
   for (const option of options) {
     if(option.innerText === userAnswers[i]){
         option.style.backgroundColor = "rgb(220, 53, 69)";
